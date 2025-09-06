@@ -1,25 +1,29 @@
 import { createTool } from "@mastra/core/tools";
 import { z } from "zod";
-const { tavily } = require("tavily");
+import { tavily } from "@tavily/core";
 
-const tvly = tavily({ apiKey: "tvly-YOUR_API_KEY" });
+const tvly = tavily({ apiKey: process.env.TAVILY_API_KEY });
 
 export const webSearchTool = createTool({
 	id: "web-search-tool",
 	description: "Search the web for information.",
 	inputSchema: z.object({
-		query: z.string().describe("The search query."),
+		query: z.string().describe("A well defined query for web search."),
 	}),
 	outputSchema: z.array(
 		z.object({
-			productName: z.string().describe("Name of the product"),
-			productDescription: z.string().describe("Description of the product"),
-			price: z.string().describe("Price of the product"),
+			title: z.string().describe("The title of the web result."),
+			content: z.string().describe("The content snippet of the web result."),
 		}),
 	),
 	execute: async ({ context }) => {
 		const response = await tvly.search(context.query);
-		console.log(response);
-		return response;
+
+		const webResults = response.results.map((result) => ({
+			title: result.title,
+			content: result.content,
+		}));
+
+		return webResults;
 	},
 });
