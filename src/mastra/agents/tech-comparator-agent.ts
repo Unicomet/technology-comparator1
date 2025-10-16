@@ -27,7 +27,7 @@ export const techComparatorAgent = new Agent({
 	  #Response Format:
     - Only output the comparison table and the conclusion, do not include any other text.
 `,
-  model: "anthropic/claude-sonnet-4-5-20250929",
+  model: "anthropic/claude-haiku-4-5",
   tools: { webSearchTool },
   memory: new Memory({
     options: {
