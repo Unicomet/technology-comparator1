@@ -1,17 +1,18 @@
 import { google } from "@ai-sdk/google";
 import { Agent } from "@mastra/core/agent";
+
 import { LibSQLStore } from "@mastra/libsql";
 import { Memory } from "@mastra/memory";
 import { webSearchTool } from "../tools/web-search-tool";
 
 export const techComparatorAgent = new Agent({
-	name: "Tech Comparator Agent",
-	instructions: `
+  name: "techComparatorAgent",
+  instructions: `
       #You are a helpful assistant that compares different technology products based on user requirements.
 
       Given the first user message which describes the type technology products to compare. Follow these steps to complete the task:
 
-	  1. Understand the user's requirements and preferences for the technology products, if it is necessary,use your working memory to recall this information from previous interactions.
+	    1. Understand the user's requirements and preferences for the technology products, if it is necessary,use your working memory to recall this information from previous interactions.
 
       2. Gather options of products that meet the requirements and preferences of the user, search this information from internet, from this current year, 2025.
 
@@ -21,16 +22,19 @@ export const techComparatorAgent = new Agent({
 
       ##Important Notes:
       - Use the search_web tool to gather information about the technologies.
-	  - Update rules when user provides new information about himself or about their preferences.
+	    - Update rules when user provides new information about himself or about their preferences.
+
+	  #Response Format:
+    - Only output the comparison table and the conclusion, do not include any other text.
 `,
-	model: google("gemini-2.5-pro"),
-	tools: { webSearchTool },
-	memory: new Memory({
-			options:{
-				workingMemory:{
-					enabled: true,
-					scope: "resource",
-					template: `# User Profile
+  model: "anthropic/claude-sonnet-4-5-20250929",
+  tools: { webSearchTool },
+  memory: new Memory({
+    options: {
+      workingMemory: {
+        enabled: true,
+        scope: "resource",
+        template: `# User Profile
 					## Personal Info 
 
 					- Name: 
@@ -45,11 +49,11 @@ export const techComparatorAgent = new Agent({
 					- Prefered mobile OS:
 					- Prefered laptop OS:
 					- Interests:
-					`
-				}
-			},
-			storage: new LibSQLStore({
-			url: "file:../mastra.db", // path is relative to the .mastra/output directory
-		}),
-	}),
+					`,
+      },
+    },
+    storage: new LibSQLStore({
+      url: "file:../mastra.db", // path is relative to the .mastra/output directory
+    }),
+  }),
 });
