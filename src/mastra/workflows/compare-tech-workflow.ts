@@ -132,10 +132,10 @@ const analyzeAndCompare = createStep({
           schema: z.object({
             comparisonTable: z
               .string()
-              .describe("A table comparing the different technology products."),
+              .describe("A table comparing the different technology products"),
             conclusion: z
               .string()
-              .describe("A conclusion based on the comparison."),
+              .describe("A conclusion based on the analysis made."),
           }),
         },
       }
@@ -177,10 +177,16 @@ const reflection = createStep({
       structuredOutput: {
         schema: z.object({
           insights: z.string().describe("The insights from the reflection."),
-          comparisonTable: z
-            .string()
-            .describe("The revised comparison table in Markdown format."),
-          conclusion: z.string().describe("The revised conclusion."),
+          schema: z.object({
+            comparisonTable: z
+              .string()
+              .describe(
+                "A comparison table based on the reflection made, in Markdown format."
+              ),
+            conclusion: z
+              .string()
+              .describe("A conclusion based on the reflection made."),
+          }),
         }),
       },
     });
