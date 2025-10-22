@@ -7,7 +7,7 @@ const reflectTechSelected = async ({
   conclusion: string;
   userRequest: string;
 }) => `
-    You are an expert in technology products and user preferences.
+    # You are an expert in technology products and user preferences.
     Your task is to reflect on the comparison table and conclusion provided, ensuring they align with the user's preferences and requirements.
 
     Comparison Table: 
@@ -56,13 +56,16 @@ const analyzeAndCompare = async ({
 
       3. Compare the products based on features, pricing, user reviews, and other relevant criteria.
 
-      4. Finally provide a comparison table with a conclusion about what is the best product considering the user's preferences and requirements.
+      4. Finally provide a comparison table with a conclusion comparing all the products.
+         - The comparison table must have ALWAYS at least these columns: "Product Name", "Features", "Pricing", "User Reviews" and "Best For", along with other relevant fetures of the product
+         - The comparison table must be in markdown format and all data in the columns must be ALWAYS in the same format for easy comparison.
+         - The conclusion must provide a clear recommendation based on the comparison.
 
       ##Important Notes:
 	    - Update rules when user provides neAw information about himself or about their preferences.
 
-	  #Response Format:
-    - Only output the comparison table and the conclusion, do not include any other text.
+      #Response Format:
+      - Only output the comparison table and the conclusion, do not include any other text.
     `;
 
 export const PROMPTS = {
