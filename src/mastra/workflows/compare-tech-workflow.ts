@@ -58,6 +58,7 @@ const research = createStep({
           schema: z.object({
             queries: z
               .array(z.string())
+              .max(3)
               .describe("A list of web search queries to perform."),
           }),
         },
@@ -97,6 +98,7 @@ const analyzeAndCompare = createStep({
           url: z.string().describe("The URL of the web result."),
         })
       )
+      .max(3)
       .describe("The gathered information from the web search."),
   }),
   outputSchema: z.object({
@@ -163,7 +165,7 @@ const reflection = createStep({
       .describe("A table comparing the different technology products."),
     conclusion: z.string().describe("A conclusion based on the comparison."),
   }),
-  execute: async ({ inputData }) => {
+  execute: async ({ inputData, runtimeContext }) => {
     if (!inputData) {
       throw new Error("No input data provided");
     }
@@ -182,6 +184,8 @@ const reflection = createStep({
         }),
       },
     });
+
+    const userRequest: string = runtimeContext.get("userRequest");
 
     return {
       comparisonTable: response.object.comparisonTable,
