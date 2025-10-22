@@ -19,7 +19,7 @@ export const reflectionAgent = new Agent({
       userRequest,
     });
   },
-  model: "anthropic/claude-sonnet-4-5-20250929",
+  model: "anthropic/claude-haiku-4-5",
   tools: {},
   memory: new Memory({
     storage: new LibSQLStore({
