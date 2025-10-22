@@ -12,7 +12,7 @@ export const researchAgent = new Agent({
       userRequest: runtimeContext.get("userRequest"),
     });
   },
-  model: "anthropic/claude-haiku-4-5-20251001",
+  model: "anthropic/claude-haiku-4-5",
   tools: { webSearchTool },
   memory: new Memory({
     storage: new LibSQLStore({
