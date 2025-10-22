@@ -177,16 +177,14 @@ const reflection = createStep({
       structuredOutput: {
         schema: z.object({
           insights: z.string().describe("The insights from the reflection."),
-          schema: z.object({
-            comparisonTable: z
-              .string()
-              .describe(
-                "A comparison table based on the reflection made, in Markdown format."
-              ),
-            conclusion: z
-              .string()
-              .describe("A conclusion based on the reflection made."),
-          }),
+          comparisonTable: z
+            .string()
+            .describe(
+              "A comparison table based on the reflection made, in Markdown format."
+            ),
+          conclusion: z
+            .string()
+            .describe("A conclusion based on the reflection made."),
         }),
       },
     });
