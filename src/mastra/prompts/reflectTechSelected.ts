@@ -31,20 +31,10 @@ const webSearchBasedOnInput = async ({
 }: {
   userRequest: string;
 }) => `
-    # You are a web search agent tasked with gathering information based on the user's request.
+    # You are a web search agent tasked with generating relevant search queries based on the user's request.
 
     User Request:
     ${userRequest}
-
-    Perform a web search to find relevant and up-to-date information that addresses the user's request, using web_search_tool.
-
-    ## Output the gathered information in a structured format, like this:
-
-    Title: <Title of the source>
-    URL: <URL of the source>
-    Summary: <A brief summary of the content relevant to the user's request>
-
-    Repeat this format for each relevant source you find.
 `;
 
 const analyzeAndCompare = async ({
